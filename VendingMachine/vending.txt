@@ -1,0 +1,7 @@
+Fridos::1.25::0::
+Lays Classic::1.25::10::
+Utz Barbeque Chips::1.25::10::
+Spicey Doritos::1.25::10::
+Mountain Dew::1.00::10::
+Doritos::1.25::9::
+Onion Rings::1.25::10::

@@ -1,0 +1,4 @@
+com\sg\VendingMachine\service\VendingMachineAuditFileStub.class
+com\sg\VendingMachine\service\VendingMachineServiceLayerImplTest.class
+com\sg\VendingMachine\dao\ItemDaoTest.class
+com\sg\VendingMachine\service\ItemDaoStub.class

@@ -1,0 +1,2 @@
+OrderNumber::CustomerName::State:TaxRate::ProductType::Area:CostPerSquareFoot::LaborCost::Tax:Total
+8::Ryu Soma::Kentucky::6.00::Tile::200::3.50::4.15::700.00::830.00::91.80::1621.80::

@@ -1,0 +1,9 @@
+AddressDao\AddressBookInterface.class
+AddressDTO\Address.class
+AddressUI\UserIOConsoleImpl.class
+AddressDao\AddressBookImpl.class
+AddressDao\AddressException.class
+AddressApp\App.class
+AddressUI\AddressView.class
+AddressController\AddressController.class
+AddressUI\UserIO.class
