@@ -1,2 +1,2 @@
 OrderNumber::CustomerName::State:TaxRate::ProductType::Area:CostPerSquareFoot::LaborCost::Tax:Total
-5::Albert::California::25::Tile::249::3.50::4.15::871.50::1033.35::476.21::2381.06::
+5::Al::California::25.00::Tile::249::3.50::4.15::871.50::1033.35::476.21::2381.06::

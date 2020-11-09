@@ -138,7 +138,7 @@ public class OrderDaoImplTest {
         assertEquals(2, orderList.size(), "Size at first was 1, as expected, now size should be 2");     
         assertTrue(orderList.contains(test), "Entry should be test");
         assertTrue(orderList.contains(test2), "Entry should be test2");
-      
+
       
         }
     
@@ -182,7 +182,6 @@ public class OrderDaoImplTest {
    
    @Test
    public void testGetOrderNumber() throws Exception{
-       
    }
 
 }
