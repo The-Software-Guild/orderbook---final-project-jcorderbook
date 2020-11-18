@@ -1,2 +1,0 @@
-OrderNumber::CustomerName::State:TaxRate::ProductType::Area:CostPerSquareFoot::LaborCost::Tax:Total
-9::Sue Harris::Kentucky::6.00::Wood::101::5.15::4.75::520.15::479.75::59.99::1059.89::
