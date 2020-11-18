@@ -16,13 +16,13 @@ public class Trade {
     //Execution time???? wtf
     BigDecimal executedPrice;
     int quantity;
+    long executionTime;
     
-    
-    public Trade(String tradeID, BigDecimal executedPrice, int quantity ){
+    public Trade(String tradeID, BigDecimal executedPrice, int quantity, long executionTime ){
         this.tradeID=tradeID;
         this.quantity=quantity;
         this.executedPrice=executedPrice;
-        this.executionTime
+        this.executionTime= executionTime;
     }
     
     public String getTradeID() {
@@ -47,6 +47,14 @@ public class Trade {
 
     public void setExecutedPrice(BigDecimal executedPrice) {
         this.executedPrice = executedPrice;
+    }
+
+    public long getExecutionTime() {
+        return executionTime;
+    }
+
+    public void setExecutionTime(long executionTime) {
+        this.executionTime = executionTime;
     }
     
     

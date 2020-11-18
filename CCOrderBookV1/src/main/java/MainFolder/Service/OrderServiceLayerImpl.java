@@ -152,6 +152,7 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
     }
     @Override
     public Trade matchTopOrder() throws Exception {
+        long startTime = System.nanoTime();
         List<Order> buyOrdersList= sortBuyOrders();
         List<Order> sellOrdersList= sortSellOrders();
         if (buyOrdersList.isEmpty() || sellOrdersList.isEmpty()){
@@ -169,7 +170,9 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
             dao.editSellOrder(sellOrder);
             BigDecimal sum= buyOrder.getPrice().add(sellOrder.getPrice());
             BigDecimal soldPrice= sum.divide(new BigDecimal("2"), 2, RoundingMode.HALF_UP);
-            Trade trade= new Trade("0", soldPrice, buyOrder.getQuantity());
+            long stopTime = System.nanoTime();
+            long elapsedTime= stopTime-startTime;
+            Trade trade= new Trade("0", soldPrice, buyOrder.getQuantity(), elapsedTime);
             dao.addTrade(trade);
             return trade;
         } else if (sellShares<buyShares){
@@ -179,7 +182,9 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
             dao.editBuyOrder(buyOrder);
             BigDecimal sum= buyOrder.getPrice().add(sellOrder.getPrice());
             BigDecimal soldPrice= sum.divide(new BigDecimal("2"), 2, RoundingMode.HALF_UP);
-            Trade trade= new Trade("0", soldPrice, sellOrder.getQuantity());
+            long stopTime = System.nanoTime();
+            long elapsedTime= stopTime-startTime;
+            Trade trade= new Trade("0", soldPrice, sellOrder.getQuantity(), elapsedTime);
             dao.addTrade(trade);
             return trade;
         }
@@ -189,7 +194,9 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
             dao.removeSellOrder(sellOrder.getOrderID());
             BigDecimal sum= buyOrder.getPrice().add(sellOrder.getPrice());
             BigDecimal soldPrice= sum.divide(new BigDecimal("2"), 2, RoundingMode.HALF_UP);
-            Trade trade= new Trade("0", soldPrice, sellOrder.getQuantity());
+            long stopTime = System.nanoTime();
+            long elapsedTime= stopTime-startTime;
+            Trade trade= new Trade("0", soldPrice, sellOrder.getQuantity(), elapsedTime);
             dao.addTrade(trade);
             return trade;
         }
@@ -198,9 +205,10 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
     
     @Override
     public void matchAllOrders() throws Exception{
+        long startTime = System.nanoTime();
         List<Order> buyOrdersList= sortBuyOrders();
         List<Order> sellOrdersList= sortSellOrders();
-      while (!buyOrdersList.isEmpty() && !sellOrdersList.isEmpty()){
+        while (!buyOrdersList.isEmpty() && !sellOrdersList.isEmpty()){
 
         Order buyOrder= buyOrdersList.get(0);
         Order sellOrder= sellOrdersList.get(0);
@@ -216,7 +224,9 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
             sellOrdersList.set(0, sellOrder);
             BigDecimal sum= buyOrder.getPrice().add(sellOrder.getPrice());
             BigDecimal soldPrice= sum.divide(new BigDecimal("2"), 2, RoundingMode.HALF_UP);
-            Trade trade= new Trade("0", soldPrice, buyOrder.getQuantity());
+            long stopTime = System.nanoTime();
+            long elapsedTime= stopTime-startTime;
+            Trade trade= new Trade("0", soldPrice, buyOrder.getQuantity(), elapsedTime);
             dao.addTrade(trade);
         } else if (sellShares<buyShares){
             remaining=buyShares-sellShares;
@@ -227,7 +237,9 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
             buyOrdersList.set(0, buyOrder);
             BigDecimal sum= buyOrder.getPrice().add(sellOrder.getPrice());
             BigDecimal soldPrice= sum.divide(new BigDecimal("2"), 2, RoundingMode.HALF_UP);
-            Trade trade= new Trade("0", soldPrice, sellOrder.getQuantity());
+            long stopTime = System.nanoTime();
+            long elapsedTime= stopTime-startTime;
+            Trade trade= new Trade("0", soldPrice, sellOrder.getQuantity(), elapsedTime);
             dao.addTrade(trade);
         }
         
@@ -238,7 +250,9 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
             sellOrdersList.remove(0);
             BigDecimal sum= buyOrder.getPrice().add(sellOrder.getPrice());
             BigDecimal soldPrice= sum.divide(new BigDecimal("2"), 2, RoundingMode.HALF_UP);
-            Trade trade= new Trade("0", soldPrice, sellOrder.getQuantity());
+            long stopTime = System.nanoTime();
+            long elapsedTime= stopTime-startTime;
+            Trade trade= new Trade("0", soldPrice, sellOrder.getQuantity(), elapsedTime);
             dao.addTrade(trade);
         }
         else {
@@ -280,6 +294,7 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
 
     @Override
     public Trade matchAnOrder(String orderID, boolean buy) throws Exception {
+        long startTime = System.nanoTime();
         List<Order> buyOrdersList= sortBuyOrders();
         List<Order> sellOrdersList= sortSellOrders();
         if (buy){
@@ -299,7 +314,9 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
                 dao.editSellOrder(sellOrder);
                 BigDecimal sum= buyOrder.getPrice().add(sellOrder.getPrice());
                 BigDecimal soldPrice= sum.divide(new BigDecimal("2"), 2, RoundingMode.HALF_UP);
-                Trade trade= new Trade("0", soldPrice, buyOrder.getQuantity());
+                long stopTime = System.nanoTime();
+                long elapsedTime= stopTime-startTime;
+                Trade trade= new Trade("0", soldPrice, buyOrder.getQuantity(), elapsedTime);
                 dao.addTrade(trade);
                 return trade;
             } else if (sellShares<buyShares){
@@ -309,7 +326,9 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
                 dao.editBuyOrder(buyOrder);
                 BigDecimal sum= buyOrder.getPrice().add(sellOrder.getPrice());
                 BigDecimal soldPrice= sum.divide(new BigDecimal("2"), 2, RoundingMode.HALF_UP);
-                Trade trade= new Trade("0", soldPrice, sellOrder.getQuantity());
+                long stopTime = System.nanoTime();
+                long elapsedTime= stopTime-startTime;
+                Trade trade= new Trade("0", soldPrice, sellOrder.getQuantity(), elapsedTime);
                 dao.addTrade(trade);
                 return trade;
             }
@@ -319,7 +338,9 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
                 dao.removeSellOrder(sellOrder.getOrderID());
                 BigDecimal sum= buyOrder.getPrice().add(sellOrder.getPrice());
                 BigDecimal soldPrice= sum.divide(new BigDecimal("2"), 2, RoundingMode.HALF_UP);
-                Trade trade= new Trade("0", soldPrice, sellOrder.getQuantity());
+                long stopTime = System.nanoTime();
+                long elapsedTime= stopTime-startTime;
+                Trade trade= new Trade("0", soldPrice, sellOrder.getQuantity(), elapsedTime);
                 dao.addTrade(trade);
                 return trade;
             }
@@ -340,7 +361,9 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
                 dao.editSellOrder(sellOrder);
                 BigDecimal sum= buyOrder.getPrice().add(sellOrder.getPrice());
                 BigDecimal soldPrice= sum.divide(new BigDecimal("2"), 2, RoundingMode.HALF_UP);
-                Trade trade= new Trade("0", soldPrice, buyOrder.getQuantity());
+                long stopTime = System.nanoTime();
+                long elapsedTime= stopTime-startTime;
+                Trade trade= new Trade("0", soldPrice, buyOrder.getQuantity(), elapsedTime);
                 dao.addTrade(trade);
                 return trade;
             } else if (sellShares<buyShares){
@@ -350,7 +373,9 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
                 dao.editBuyOrder(buyOrder);
                 BigDecimal sum= buyOrder.getPrice().add(sellOrder.getPrice());
                 BigDecimal soldPrice= sum.divide(new BigDecimal("2"), 2, RoundingMode.HALF_UP);
-                Trade trade= new Trade("0", soldPrice, sellOrder.getQuantity());
+                long stopTime = System.nanoTime();
+                long elapsedTime= stopTime-startTime;
+                Trade trade= new Trade("0", soldPrice, sellOrder.getQuantity(), elapsedTime);
                 dao.addTrade(trade);
                 return trade;
             }
@@ -360,7 +385,9 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
                 dao.removeSellOrder(sellOrder.getOrderID());
                 BigDecimal sum= buyOrder.getPrice().add(sellOrder.getPrice());
                 BigDecimal soldPrice= sum.divide(new BigDecimal("2"), 2, RoundingMode.HALF_UP);
-                Trade trade= new Trade("0", soldPrice, sellOrder.getQuantity());
+                long stopTime = System.nanoTime();
+                long elapsedTime= stopTime-startTime;
+                Trade trade= new Trade("0", soldPrice, sellOrder.getQuantity(), elapsedTime);
                 dao.addTrade(trade);
                 return trade;
             }

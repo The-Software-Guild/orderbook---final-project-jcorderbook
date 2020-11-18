@@ -182,7 +182,7 @@ public class OrderDaoImpl implements OrderDaoInterface {
     private Trade unmarshallTrade(String TradeAsText){
         String[] TradeTokens= TradeAsText.split(DELIMITER);
         String tradeID=TradeTokens[0];
-        Trade TradeFromFile= new Trade(tradeID, new BigDecimal(TradeTokens[1]), S.integize(TradeTokens[2]));
+        Trade TradeFromFile= new Trade(tradeID, new BigDecimal(TradeTokens[1]), S.integize(TradeTokens[2]), Long.parseLong(TradeTokens[3]));
 
         return TradeFromFile;
     }
@@ -195,6 +195,7 @@ public class OrderDaoImpl implements OrderDaoInterface {
         
         OrderAsText += Integer.toString(aOrder.getQuantity());
         
+        
         return OrderAsText;
     }
     
@@ -204,7 +205,9 @@ public class OrderDaoImpl implements OrderDaoInterface {
         
         TradeAsText += aTrade.getExecutedPrice().toString()+DELIMITER;
         
-        TradeAsText += Integer.toString(aTrade.getQuantity());
+        TradeAsText += Integer.toString(aTrade.getQuantity())+DELIMITER;
+        
+        TradeAsText+= Long.toString(aTrade.getExecutionTime());
         
         return TradeAsText;
     }
