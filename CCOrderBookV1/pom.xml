@@ -17,5 +17,5 @@
             <version>5.2.2.RELEASE</version>
         </dependency>
     </dependencies>
-    <name>OrderBook</name>
+    <name>CCOrderBook</name>
 </project>
