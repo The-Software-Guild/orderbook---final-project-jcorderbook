@@ -309,7 +309,30 @@ public class OrderBookView {
 	 */
 	public void displayTrades(List<Trade> allTrades) {
 		flush("* * * * * * * * * * * * Trades So Far * * * * * * * * * * * *");
-		allTrades.forEach((trade)-> flush(trade.getTradeID()+" Executed Price: $"+ trade.getExecutedPrice().toString()+ " Quantity: "+ trade.getQuantity()+" Time:"+ trade.getTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)));
+                int start=0;
+                int end=19;
+                while (true){
+                    if (allTrades.size()<end+1){
+                        end=allTrades.size()-1;
+                    }
+                    for (int i=start; i< end; i++){
+                        Trade trade= allTrades.get(i);
+                        flush(trade.getTradeID()+" Executed Price: $"+ trade.getExecutedPrice().toString()+ " Quantity: "+ trade.getQuantity()+" Time:"+ trade.getTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+                    }
+                    if (end+1==allTrades.size()){
+                        break;
+                    }
+                    S.print("\n");
+                    int input = userIO.readInt("Press 1 to go to the next page. Press 2 to exit.", 1, 2);
+                    if (input==1){
+                        start= start+20;
+                        end= end+20;
+                    } else if (input==2){
+                        break;
+                    }
+                }
+        
+		//allTrades.forEach((trade)-> flush(trade.getTradeID()+" Executed Price: $"+ trade.getExecutedPrice().toString()+ " Quantity: "+ trade.getQuantity()+" Time:"+ trade.getTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)));
 	}
         
         public void displayMatchAllOrdersBanner(){

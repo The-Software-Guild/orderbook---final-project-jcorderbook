@@ -33,6 +33,7 @@ public class OrderController {
 	
 	private OrderBookView view;
 	private OrderServiceLayer service;
+        //currently it's set to generate 1000 orders by default. 
 	@Autowired
 	public OrderController(OrderServiceLayer service, OrderBookView view) {
 		this.service = service;
@@ -44,7 +45,7 @@ public class OrderController {
 		boolean keepGoing = true;
 		int menuSelection = 0;
                 service.clearTables();
-                service.generateNRandomOrders(1000);
+                service.generateNRandomOrders(35);
 		while(keepGoing) {
                 try {
 			
@@ -112,7 +113,8 @@ public class OrderController {
 		// OrderView view = new OrderView(myIo);
 		return view.printMenuAndGetSelection();
 	}
-	
+	//All the functions will throw Error messages if anything is empty;
+        //GetBuyOrSell is used to determine which service functions to call given a valid OrderID
 	private void createOrder() throws OrderPersistenceException, IOException, OrderDataValidationException{
 		view.displayCreateOrderBanner();
                 boolean hasErrors= false;
