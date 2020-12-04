@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: MainFolder.DAO.OrderDaoImplTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.289 s - in MainFolder.DAO.OrderDaoImplTest
