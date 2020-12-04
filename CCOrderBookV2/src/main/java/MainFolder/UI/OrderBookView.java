@@ -68,10 +68,11 @@ public class OrderBookView {
 		flush("* 10. View Trades by Quantity");
                 flush("* 11. Update an Order");
                 flush("* 12. Display Orderbook Stats");
-		flush("* 13. Quit");
+                flush("* 13. Check if OrderBook is empty");
+		flush("* 14. Quit");
 		flush("*");
 		flush("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
-                return userIO.readInt("Please make a selection (1-13)", 1, 13);
+                return userIO.readInt("Please make a selection (1-14)", 1, 14);
 	}
 
 	/**
@@ -130,7 +131,7 @@ public class OrderBookView {
 	 * Exit.
 	 */
 	public void exit() {
-		flush("Thank you for using BookTracker!");
+		flush("Thank you for using OrderBook!");
 	}
         
         public Order getNewOrderInfo(){
@@ -406,5 +407,11 @@ public class OrderBookView {
             }
             return updatedParams;
         }
-        
+        public void isEmpty(boolean empty){
+            if (empty){
+                S.print("The OrderBook is empty (either the buy or sell list is empty)");
+            } else{
+                S.print("The Orderbook has both buy and sell orders");
+            }
+        }
 }

@@ -88,7 +88,10 @@ public class OrderController {
                                 case 12: 
                                         displayStats();
                                         break;
-				case 13:
+                                case 13:
+                                        isEmpty();
+                                        break;
+				case 14:
 					keepGoing = false;
 					break;
 				default:
@@ -128,13 +131,14 @@ public class OrderController {
 	}
 	
 	private void listOrders() throws OrderPersistenceException{
+                List<Order> buyOrderList = service.sortBuyOrders();
+                List<Order> sellOrderList=service.sortSellOrders();
 		view.displayAllOrdersBanner();
-                if (service.isEmpty()){
+                if (buyOrderList.isEmpty()&& sellOrderList.isEmpty()){
                     view.displayErrorMessage("Error: Orders are empty");
                     return;
                 }
-		List<Order> buyOrderList = service.sortBuyOrders();
-                List<Order> sellOrderList=service.sortSellOrders();
+		
 		view.displayAllOrders(buyOrderList, sellOrderList);
 	}
         
@@ -316,5 +320,9 @@ public class OrderController {
             List<Order> buyOrdersList= service.getAllBuyOrders();
             List<Order> sellOrdersList= service.getAllSellOrders();
             view.displayStats(buyOrdersList, sellOrdersList);
+        }
+        
+        public void isEmpty() throws OrderPersistenceException{
+            view.isEmpty(service.isEmpty());
         }
 }

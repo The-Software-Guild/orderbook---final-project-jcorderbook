@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  *
  * @author recyn
  */
-@Component
+
 public class Order {
 
     @Override

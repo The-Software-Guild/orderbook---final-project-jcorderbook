@@ -14,6 +14,7 @@ import java.util.Objects;
  *
  * @author recyn
  */
+
 public class Trade {
 
     @Override

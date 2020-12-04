@@ -37,13 +37,15 @@ import s.S;
  */
 @Component
 public class OrderDaoImpl implements OrderDaoInterface {
+    //FIVE EXTERNAL FILES REQUIRED
     public final String BUYCOLLECTION_FILE;
     public final String SELLCOLLECTION_FILE;
     public final String TRADELOG_FILE;
     public static final String DELIMITER = "::";
     private String ORDERNUMBERS_FILE;
     private String TRADENUMBERS_FILE;
-    
+    //These constructors allow you to specify the buy, sell, and trade lists as well as the number files. 
+    //Separate files and functions for trades, buys, and sells
     @Autowired
     public OrderDaoImpl(){
         BUYCOLLECTION_FILE="buyCollection.txt";
@@ -71,6 +73,7 @@ public class OrderDaoImpl implements OrderDaoInterface {
     public Map<String, Order> SellOrders= new HashMap<>();
     public Map<String, Trade> TradeLog= new HashMap<>();
     
+    //Gets an ordernumber from the ordernumbersfile and adds the prefix
     @Override
     public Order addBuyOrder(Order order) throws OrderPersistenceException {
         loadCollection();
@@ -104,7 +107,7 @@ public class OrderDaoImpl implements OrderDaoInterface {
         loadCollection();
        return SellOrders.get(orderID);
     }
-    
+    //We have two different persistence exceptions here
     @Override
     public Trade getTrade(String tradeID) throws TradePersistenceException {
         try {
@@ -114,12 +117,14 @@ public class OrderDaoImpl implements OrderDaoInterface {
         }
        return TradeLog.get(tradeID);
     }
-
+    
     @Override
     public List<Order> getAllBuyOrders()  throws OrderPersistenceException{
         loadCollection();
         return new ArrayList<>(BuyOrders.values());
     }
+    
+    
     @Override
     public List<Trade> getAllTrades() throws TradePersistenceException{
         try {
@@ -134,7 +139,7 @@ public class OrderDaoImpl implements OrderDaoInterface {
         loadCollection();
         return new ArrayList<>(SellOrders.values());
     }
-    
+    //The service checks to see if the updatedOrder ID is actually there and throws an Exception otherwise, so we don't have to worry about that here. 
     @Override
     public Order editBuyOrder(Order updatedOrder) throws OrderPersistenceException {
         loadCollection();
@@ -317,7 +322,7 @@ public class OrderDaoImpl implements OrderDaoInterface {
     public Map<String, Order> getMap(){
         return BuyOrders;
     }
-
+    //Both buy and sell orders use the same orderNumbers file. Every time getOrderNumber is called, the lone number in the file gets +1 for the next usage.
      public String getOrderNumber() throws OrderPersistenceException{
         Scanner scanner;
         try{
@@ -339,6 +344,8 @@ public class OrderDaoImpl implements OrderDaoInterface {
         out.close();
         return Integer.toString(orderNumber);
     }
+     
+     //Separate Trade numbers file for trades. 
      @Override
      public String getTradeNumber() throws TradePersistenceException{
         Scanner scanner;
@@ -380,7 +387,7 @@ public class OrderDaoImpl implements OrderDaoInterface {
 
         return newTrade;
     }
-    
+    //Used for clearing all five files every time the app is used. 
     @Override
     public void clearTables(boolean clearBuy, boolean clearSell, boolean clearTrades) throws OrderPersistenceException{
         if (clearBuy){

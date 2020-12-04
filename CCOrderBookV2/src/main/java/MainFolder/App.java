@@ -22,7 +22,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  *
  */
 public class App {
-
+        
 	public static void main(String[] args) throws IOException, Exception {
                 
 		UserIO myIo = new UserIOConsoleImpl();
@@ -32,15 +32,15 @@ public class App {
 		OrderController controller = new OrderController(myService, myView);
 		
                 controller.run();
-                
-            /*AnnotationConfigApplicationContext appContext = new AnnotationConfigApplicationContext();
+            /*
+            AnnotationConfigApplicationContext appContext = new AnnotationConfigApplicationContext();
             
-            appContext.scan("Order");
+            appContext.scan("MainFolder");
             appContext.refresh();
             
-            OrderController controller = appContext.getBean("dtoController", OrderController.class);
+            OrderController controller = appContext.getBean("OrderController", OrderController.class);
             controller.run();
-*/
+               */
             
 	}
 }

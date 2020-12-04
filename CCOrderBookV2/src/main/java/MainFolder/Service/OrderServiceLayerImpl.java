@@ -39,7 +39,8 @@ import s.S;
 @Component
 public class OrderServiceLayerImpl implements OrderServiceLayer {
     OrderDaoInterface dao;
-    private OrderAuditDao auditDao;
+    
+    
     @Autowired
     public OrderServiceLayerImpl(OrderDaoInterface dao) throws Exception{
         this.dao=dao;
@@ -112,7 +113,7 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
         
         return removedOrder;
     }
-    //Checks to see if a order has values for all its member fields, except for Var2, because Var2 is an int and cannot be null. 
+    //Checks to see if a order has values for all its member fields, except for quantity, because quantity is an int and cannot be null. 
     //Any error with the Var2 would be caught in either the view or controller when converting a String input to an integer. 
     //Ideally this would also check whether or not the fields are also empty Strings. 
     private void validateOrderData(Order order) throws OrderDataValidationException, OrderPersistenceException{
@@ -146,6 +147,7 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
             return false;
         }
     }
+    //These utilize a sort from the DTO to give a list sorted by price first and time second. 
     @Override
     public List<Order> sortBuyOrders() throws OrderPersistenceException {
         List<Order> buyOrders= dao.getAllBuyOrders();
@@ -166,6 +168,7 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
         Collections.sort(allTrades, new SortTrades());
         return allTrades;
     }
+    //Uses a bunch of if statements to partially or fully fill orders and generates a new trade each time. 
     @Override
     public Trade matchTopOrder() throws OrderMatchException, OrderPersistenceException, TradePersistenceException { 
         List<Order> buyOrdersList= sortBuyOrders();
@@ -223,7 +226,7 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
         }
         throw new OrderPersistenceException("Error: unable to match top trade");
     }
-    
+    //Ended up shoving this to the controller.
     @Override
     public void matchAllOrders() throws OrderMatchException, OrderPersistenceException, TradePersistenceException {
         List<Order> buyOrdersList= sortBuyOrders();
@@ -302,7 +305,7 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
         dao.addSellOrder(randomOrder);
         return randomOrder;
     }
-    
+    //Generates a specified number of random orders for both buy and sell. 
     public void generateNRandomOrders(int N) throws OrderPersistenceException{
         for (int i=0; i< N; i++){
             addBuyRandomOrder();
@@ -310,11 +313,12 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
         }
         
     }
+    //Calls the same function from the dao. 
     @Override
     public void clearTables() throws OrderPersistenceException{
         dao.clearTables(true, true, true);
     }
-
+    //Same code as before, but only matches the top buy or sell to the specified order. It's long because it accounts for the case if the buy or sells is empty. 
     @Override
     public Trade matchAnOrder(String orderID, boolean buy) throws OrderMatchException, OrderPersistenceException, TradePersistenceException {
         List<Order> buyOrdersList= sortBuyOrders();
@@ -416,7 +420,7 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
         }
         throw new OrderMatchException("Error: unable to match top trade");
     }
-
+    //the clear tables function allows you to select what files you want to clear and what you want to keep. 
     @Override
     public void clearTradeLog() {
         try {
@@ -425,7 +429,8 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
             Logger.getLogger(OrderServiceLayerImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+    //These use streams to get trades by Date, Time, and quantity
+    //For date and time, we get various levels of specificity. 
     @Override
     public List<Trade> tradesByDate(LocalDate date) throws TradePersistenceException {
         //int year= date.getYear();
@@ -484,7 +489,7 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
                 .collect(Collectors.toList());
         return tradesByQuantity;
     }
-    
+    //Update orders only change the parameter if the orderID is valid and the new parameters aren't blank. 
     @Override 
     public Order editBuyOrder(String[] updatedParam) throws OrderPersistenceException {
         Order updatedOrder=dao.getBuyOrder(updatedParam[0]);
@@ -518,7 +523,7 @@ public class OrderServiceLayerImpl implements OrderServiceLayer {
         dao.editSellOrder(updatedOrder);
         return updatedOrder;
     }
-    
+    //Tells if the given orderID is valid, and if it is, whether or not it's a buy or sell order. 
     @Override
     public boolean getBuyOrSell(String OrderID) throws OrderPersistenceException {
         if (dao.getBuyOrder(OrderID)==null && dao.getSellOrder(OrderID)==null){
